@@ -1,5 +1,9 @@
 # uiio
 
-The straightforward UI controlling protocol works on top of plain text streams.
+Implementation of the interactive `uiio` protocol for simple transmission
+of actions displayed in the user interface.
 
-An every command is a line.
+Essentially, it works as a set of instructions read and executed by
+a visualizer (like [hug](https://github.com/rationalintelligence/hug))
+to achieve a zero-code approach to UI and visualization.
+This is especially useful for creating small services and bots.
