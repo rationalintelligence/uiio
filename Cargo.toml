@@ -1,8 +1,9 @@
-[package]
-name = "uiio"
-version = "0.0.1"
-edition = "2021"
-description = "UI IO for the HUG tool"
-license = "MIT"
+[workspace]
+resolver = "2"
+members = [
+    "crates/*",
+]
 
-[dependencies]
+[workspace.dependencies]
+anyhow = "1.0.94"
+thiserror = "2.0.8"

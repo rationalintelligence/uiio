@@ -1,0 +1,11 @@
+[package]
+name = "uiio"
+version = "0.0.1"
+edition = "2021"
+description = "UI IO for the HUG tool"
+license = "MIT"
+
+[dependencies]
+anyhow.workspace = true
+nom = "7.1.3"
+thiserror.workspace = true
