@@ -4,6 +4,7 @@ use nom::{
     multi::separated_list1,
     IResult,
 };
+use std::fmt;
 use std::str::FromStr;
 use std::sync::Arc;
 use thiserror::Error;
@@ -28,7 +29,29 @@ pub enum Error {
 
 #[derive(Debug, PartialEq)]
 pub struct Fqn {
-    path: Vec<Arc<String>>,
+    components: Vec<Arc<String>>,
+    rendered: Arc<String>,
+}
+
+impl Fqn {
+    fn new<'a>(components: impl IntoIterator<Item = &'a str>) -> Self {
+        let mut rendered = String::new();
+        let components: Vec<_> = components
+            .into_iter()
+            .enumerate()
+            .map(|(idx, item)| {
+                if idx > 0 {
+                    rendered.push('.');
+                }
+                rendered.push_str(item);
+                Arc::new(String::from(item))
+            })
+            .collect();
+        Fqn {
+            components,
+            rendered: Arc::new(rendered),
+        }
+    }
 }
 
 impl FromStr for Fqn {
@@ -36,16 +59,41 @@ impl FromStr for Fqn {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match fqn(s) {
-            Ok((remaining, components)) if remaining.is_empty() => {
-                let path = components
-                    .into_iter()
-                    .map(String::from)
-                    .map(Arc::new)
-                    .collect();
-                Ok(Fqn { path })
-            }
+            Ok((remaining, components)) if remaining.is_empty() => Ok(Fqn::new(components)),
             Ok((remaining, _)) => Err(Error::Remaining(remaining.into())),
             Err(err) => Err(Error::FailedToParse(err.to_string())),
         }
+    }
+}
+
+impl fmt::Display for Fqn {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.rendered)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_fqn_parsing() {
+        let input = "app.module.scope.component";
+        let expected = Fqn::new(["app", "module", "scope", "component"]);
+        let result = Fqn::from_str(input).unwrap();
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_fqn_parsing_with_error() {
+        let input = "app.module..scope.component";
+        let result = Fqn::from_str(input);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_fqn_display() {
+        let fqn = Fqn::new(["app", "module", "scope", "component"]);
+        assert_eq!(fqn.to_string(), "app.module.scope.component");
     }
 }
