@@ -4,6 +4,12 @@ members = [
     "crates/*",
 ]
 
+[workspace.package]
+repository = "https://github.com/rationalintelligence/uiio"
+version = "0.0.1"
+license = "MIT"
+edition = "2021"
+
 [workspace.dependencies]
 anyhow = "1.0.94"
 thiserror = "2.0.8"
