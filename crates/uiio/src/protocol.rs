@@ -3,16 +3,16 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 #[derive(Serialize)]
-pub struct Record<T: OutFlow> {
+pub struct Record<'a, T: OutFlow> {
     pub fqn: String,
-    pub event: Event<T>,
+    pub event: Event<'a, T>,
 }
 
 #[derive(Serialize)]
 #[serde(rename_all = "snake_case")]
-pub enum Event<T: OutFlow> {
-    Create(String),
-    Value(T::Value),
+pub enum Event<'a, T: OutFlow> {
+    Create(&'a str),
+    Value(&'a T),
     Destroy,
 }
 

@@ -1,22 +1,21 @@
 use crate::flow::OutFlow;
 use crate::fqn::Fqn;
 use crate::protocol::{Event, Record};
-use serde::Serialize;
-use std::any::type_name;
+use std::marker::PhantomData;
 
-pub struct Tracer<F: OutFlow> {
+pub struct Tracer<OUT: OutFlow> {
     fqn: String,
-    flow: F,
+    _out: PhantomData<OUT>,
 }
 
-impl<F> Tracer<F>
+impl<OUT> Tracer<OUT>
 where
-    F: OutFlow,
+    OUT: OutFlow,
 {
-    pub fn new(fqn: Fqn, value: &F::Value) -> Self {
+    pub fn new(fqn: Fqn, value: &OUT) -> Self {
         let this = Self {
             fqn: fqn.to_string(),
-            flow: F::default(),
+            _out: PhantomData,
         };
         this.create();
         this.trace(value);
@@ -24,7 +23,7 @@ where
     }
 
     fn create(&self) {
-        let class = self.flow.class().to_string();
+        let class = OUT::class();
         let event = Event::Create(class);
         self.event(event);
     }
@@ -34,7 +33,7 @@ where
         self.event(event);
     }
 
-    fn event(&self, event: Event<F>) {
+    fn event(&self, event: Event<OUT>) {
         let record = Record {
             fqn: self.fqn.clone(),
             event,
@@ -44,15 +43,15 @@ where
         }
     }
 
-    pub fn trace(&self, value: &F::Value) {
-        let event = Event::Value(value.clone());
+    pub fn trace(&self, value: &OUT) {
+        let event = Event::Value(value);
         self.event(event);
     }
 }
 
-impl<F> Drop for Tracer<F>
+impl<OUT> Drop for Tracer<OUT>
 where
-    F: OutFlow,
+    OUT: OutFlow,
 {
     fn drop(&mut self) {
         self.destroy();

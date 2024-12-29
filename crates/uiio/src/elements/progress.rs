@@ -3,20 +3,19 @@ use crate::fqn::Fqn;
 use crate::tracer::Tracer;
 use serde::Serialize;
 
-#[derive(Default, Serialize)]
-pub struct ProgressFlow;
-
-impl OutFlow for ProgressFlow {
-    type Value = ProgressValue;
-}
-
 #[derive(Serialize, Clone)]
 pub struct ProgressValue {
     progress: u32,
 }
 
+impl OutFlow for ProgressValue {
+    fn class() -> &'static str {
+        "uiio.elements.progress"
+    }
+}
+
 pub struct Progress {
-    tracer: Tracer<ProgressFlow>,
+    tracer: Tracer<ProgressValue>,
     current: u64,
     total: u64,
     value: ProgressValue,

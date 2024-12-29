@@ -1,5 +1,5 @@
 use anyhow::Result;
-use uiio::flow::Progress;
+use uiio::elements::Progress;
 
 #[test]
 fn test_progress() -> Result<()> {
