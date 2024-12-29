@@ -1,4 +1,4 @@
-# uiio
+<img src="./assets/uiio-logo.png" width="100" />
 
 Implementation of the interactive `uiio` protocol for simple transmission
 of actions displayed in the user interface.
