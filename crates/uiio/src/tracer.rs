@@ -1,5 +1,5 @@
 use crate::fqn::Fqn;
-use crate::protocol::{Event, Record, UiOutWrite};
+use crate::protocol::{Event, Record};
 use serde::Serialize;
 use std::any::type_name;
 
