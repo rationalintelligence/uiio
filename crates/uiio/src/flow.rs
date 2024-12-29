@@ -1,3 +1,4 @@
+use anyhow::Result;
 use derive_more::{From, Into};
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use std::any::type_name;
@@ -10,6 +11,13 @@ where
     Self: DeserializeOwned + Serialize,
     Self: Clone + Sync + Send + 'static,
 {
+    fn pack(&self) -> Result<PackedData> {
+        todo!()
+    }
+
+    fn unpack(data: &PackedData) -> Result<Self> {
+        todo!()
+    }
 }
 
 impl<T> DataFraction for T
