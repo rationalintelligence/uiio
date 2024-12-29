@@ -1,23 +1,19 @@
-use anyhow::Result;
+use anyhow::{Error, Result};
 use derive_more::{From, Into};
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde_json::Value;
 use std::any::type_name;
-
-#[derive(Clone, From, Into, Serialize, Deserialize, PartialEq, Eq)]
-pub struct PackedData(pub Vec<u8>);
 
 pub trait DataFraction
 where
     Self: DeserializeOwned + Serialize,
     Self: Clone + Sync + Send + 'static,
 {
-    fn pack(&self) -> Result<PackedData> {
-        todo!()
-    }
+    type Block;
 
-    fn unpack(data: &PackedData) -> Result<Self> {
-        todo!()
-    }
+    fn pack(&self) -> Result<Self::Block>;
+
+    fn unpack(data: Self::Block) -> Result<Self>;
 }
 
 impl<T> DataFraction for T
@@ -25,6 +21,15 @@ where
     T: DeserializeOwned + Serialize,
     T: Clone + Sync + Send + 'static,
 {
+    type Block = Value;
+
+    fn pack(&self) -> Result<Self::Block> {
+        serde_json::to_value(self).map_err(Error::from)
+    }
+
+    fn unpack(data: Self::Block) -> Result<Self> {
+        serde_json::from_value(data).map_err(Error::from)
+    }
 }
 
 pub trait Flow: DataFraction {
