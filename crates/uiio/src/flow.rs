@@ -1,20 +1,21 @@
 use crate::fqn::Fqn;
-use crate::tracer::{Trace, Tracer};
+use crate::tracer::{OutFlow, Tracer};
 use serde::Serialize;
 
-pub struct ProgressTrace;
+#[derive(Default, Serialize)]
+pub struct ProgressFlow;
 
-impl Trace for ProgressTrace {
+impl OutFlow for ProgressFlow {
     type Value = ProgressValue;
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 pub struct ProgressValue {
     progress: u32,
 }
 
 pub struct Progress {
-    tracer: Tracer<ProgressTrace>,
+    tracer: Tracer<ProgressFlow>,
     current: u64,
     total: u64,
     value: ProgressValue,
@@ -22,11 +23,13 @@ pub struct Progress {
 
 impl Progress {
     pub fn new(fqn: Fqn, total: u64) -> Self {
+        let value = ProgressValue { progress: 0 };
+        let tracer = Tracer::new(fqn, &value);
         Self {
-            tracer: Tracer::new(fqn),
+            tracer,
             current: 0,
             total,
-            value: ProgressValue { progress: 0 },
+            value,
         }
     }
 
