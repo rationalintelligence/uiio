@@ -12,4 +12,6 @@ edition = "2021"
 
 [workspace.dependencies]
 anyhow = "1.0.94"
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = "1.0.134"
 thiserror = "2.0.8"

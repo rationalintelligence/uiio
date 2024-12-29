@@ -66,6 +66,12 @@ impl FromStr for Fqn {
     }
 }
 
+impl AsRef<str> for Fqn {
+    fn as_ref(&self) -> &str {
+        self.rendered.as_ref()
+    }
+}
+
 impl fmt::Display for Fqn {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.rendered)
