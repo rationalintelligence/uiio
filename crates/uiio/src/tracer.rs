@@ -1,16 +1,8 @@
+use crate::flow::OutFlow;
 use crate::fqn::Fqn;
 use crate::protocol::{Event, Record};
 use serde::Serialize;
 use std::any::type_name;
-
-pub trait OutFlow: Default + Serialize {
-    // TODO: No serialize needed
-    type Value: Clone + Serialize;
-
-    fn class(&self) -> &str {
-        type_name::<Self>()
-    }
-}
 
 pub struct Tracer<F: OutFlow> {
     fqn: String,

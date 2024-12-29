@@ -1,5 +1,6 @@
-use crate::tracer::OutFlow;
+use crate::flow::OutFlow;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 #[derive(Serialize)]
 pub struct Record<T: OutFlow> {
@@ -25,4 +26,18 @@ pub struct UiOutWrite<'a, V> {
 pub struct UiOutRead<V> {
     pub fqn: String,
     pub value: V,
+}
+
+#[derive(Deserialize)]
+pub struct RecordRead {
+    pub fqn: String,
+    pub event: EventRead,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum EventRead {
+    Create(String),
+    Value(Value),
+    Destroy,
 }
