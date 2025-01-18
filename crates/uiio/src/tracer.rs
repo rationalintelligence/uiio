@@ -1,6 +1,6 @@
 use crate::flow::EventFlow;
-use crate::id::{FlowId, GENERATOR};
 use crate::fqn::Fqn;
+use crate::id::{FlowId, GENERATOR};
 use crate::protocol::{Event, Record};
 use std::marker::PhantomData;
 
@@ -45,10 +45,7 @@ where
     }
 
     fn event(&self, event: Event<OUT>) {
-        let record = Record {
-            id: self.id,
-            event,
-        };
+        let record = Record { id: self.id, event };
         if let Ok(dump) = serde_json::to_string(&record) {
             println!("{}", dump);
         }

@@ -1,8 +1,7 @@
 use serde::Serialize;
 
 /// stdin flow
-pub trait ControlFlow {
-}
+pub trait ControlFlow {}
 
 /// stdout flow
 pub trait EventFlow: Serialize {
@@ -10,5 +9,4 @@ pub trait EventFlow: Serialize {
 }
 
 /// stderr flow
-pub trait LogFlow {
-}
+pub trait LogFlow {}

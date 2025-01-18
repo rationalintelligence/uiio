@@ -1,7 +1,7 @@
+use serde::Serialize;
 use uiio::flow::EventFlow;
 use uiio::fqn::Fqn;
 use uiio::tracer::Tracer;
-use serde::Serialize;
 
 #[derive(Serialize, Clone)]
 pub struct ProgressValue {

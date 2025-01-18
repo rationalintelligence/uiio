@@ -13,10 +13,7 @@ pub struct Record<'a, T: EventFlow> {
 #[derive(Serialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Event<'a, T: EventFlow> {
-    Create {
-        fqn: &'a Fqn,
-        class: &'a str,
-    },
+    Create { fqn: &'a Fqn, class: &'a str },
     Value(&'a T),
     Destroy,
 }

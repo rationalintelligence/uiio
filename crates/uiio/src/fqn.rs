@@ -4,10 +4,10 @@ use nom::{
     multi::separated_list1,
     IResult,
 };
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
 use thiserror::Error;
-use serde::{Serialize, Deserialize};
 
 /// Helper function to parse a valid identifier component
 fn identifier(input: &str) -> IResult<&str, &str> {
