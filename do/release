@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-cargo workspaces publish --allow-branch trunk --all --publish-as-is
