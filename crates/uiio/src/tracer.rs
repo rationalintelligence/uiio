@@ -1,16 +1,16 @@
-use crate::flow::OutFlow;
+use crate::flow::EventFlow;
 use crate::fqn::Fqn;
 use crate::protocol::{Event, Record};
 use std::marker::PhantomData;
 
-pub struct Tracer<OUT: OutFlow> {
+pub struct Tracer<OUT: EventFlow> {
     fqn: String,
     _out: PhantomData<OUT>,
 }
 
 impl<OUT> Tracer<OUT>
 where
-    OUT: OutFlow,
+    OUT: EventFlow,
 {
     pub fn new(fqn: Fqn, value: &OUT) -> Self {
         let this = Self {
@@ -51,7 +51,7 @@ where
 
 impl<OUT> Drop for Tracer<OUT>
 where
-    OUT: OutFlow,
+    OUT: EventFlow,
 {
     fn drop(&mut self) {
         self.destroy();

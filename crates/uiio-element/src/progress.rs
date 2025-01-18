@@ -1,6 +1,6 @@
-use crate::flow::OutFlow;
-use crate::fqn::Fqn;
-use crate::tracer::Tracer;
+use uiio::flow::EventFlow;
+use uiio::fqn::Fqn;
+use uiio::tracer::Tracer;
 use serde::Serialize;
 
 #[derive(Serialize, Clone)]
@@ -8,7 +8,7 @@ pub struct ProgressValue {
     progress: u32,
 }
 
-impl OutFlow for ProgressValue {
+impl EventFlow for ProgressValue {
     fn class() -> &'static str {
         "uiio.elements.progress"
     }

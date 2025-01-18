@@ -1,16 +1,16 @@
-use crate::flow::OutFlow;
+use crate::flow::EventFlow;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 #[derive(Serialize)]
-pub struct Record<'a, T: OutFlow> {
+pub struct Record<'a, T: EventFlow> {
     pub fqn: String,
     pub event: Event<'a, T>,
 }
 
 #[derive(Serialize)]
 #[serde(rename_all = "snake_case")]
-pub enum Event<'a, T: OutFlow> {
+pub enum Event<'a, T: EventFlow> {
     Create(&'a str),
     Value(&'a T),
     Destroy,

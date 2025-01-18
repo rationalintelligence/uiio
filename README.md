@@ -1,9 +1,5 @@
 <img src="./assets/uiio-logo.png" width="100" />
 
-Implementation of the interactive `uiio` protocol for simple transmission
-of actions displayed in the user interface.
+**uiio** is a low-level protocol for transmitting flows: event, control, and log.
 
-Essentially, it works as a set of instructions read and executed by
-a visualizer (like [hug](https://github.com/rationalintelligence/hug))
-to achieve a zero-code approach to UI and visualization.
-This is especially useful for creating small services and bots.
+The idea is to provide a universal and portable way to exchange data between the interface and the application.
