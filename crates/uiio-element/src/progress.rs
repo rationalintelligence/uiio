@@ -10,7 +10,7 @@ pub struct ProgressValue {
 
 impl EventFlow for ProgressValue {
     fn class() -> &'static str {
-        "uiio.elements.progress"
+        "uiio.element.progress"
     }
 }
 
