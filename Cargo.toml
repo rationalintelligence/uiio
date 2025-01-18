@@ -9,7 +9,7 @@ exclude = [
 
 [workspace.package]
 repository = "https://github.com/rationalintelligence/uiio"
-version = "0.0.2"
+version = "0.0.3"
 license = "MIT"
 edition = "2021"
 
