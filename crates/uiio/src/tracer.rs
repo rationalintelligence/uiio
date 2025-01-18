@@ -1,10 +1,12 @@
 use crate::flow::EventFlow;
+use crate::id::{FlowId, GENERATOR};
 use crate::fqn::Fqn;
 use crate::protocol::{Event, Record};
 use std::marker::PhantomData;
 
 pub struct Tracer<OUT: EventFlow> {
-    fqn: String,
+    id: FlowId,
+    fqn: Fqn,
     _out: PhantomData<OUT>,
 }
 
@@ -14,7 +16,8 @@ where
 {
     pub fn new(fqn: Fqn, value: &OUT) -> Self {
         let this = Self {
-            fqn: fqn.to_string(),
+            id: GENERATOR.next(),
+            fqn,
             _out: PhantomData,
         };
         this.create();
@@ -24,7 +27,15 @@ where
 
     fn create(&self) {
         let class = OUT::class();
-        let event = Event::Create(class);
+        let event = Event::Create {
+            fqn: &self.fqn,
+            class,
+        };
+        self.event(event);
+    }
+
+    pub fn trace(&self, value: &OUT) {
+        let event = Event::Value(value);
         self.event(event);
     }
 
@@ -35,17 +46,12 @@ where
 
     fn event(&self, event: Event<OUT>) {
         let record = Record {
-            fqn: self.fqn.clone(),
+            id: self.id,
             event,
         };
         if let Ok(dump) = serde_json::to_string(&record) {
             println!("{}", dump);
         }
-    }
-
-    pub fn trace(&self, value: &OUT) {
-        let event = Event::Value(value);
-        self.event(event);
     }
 }
 

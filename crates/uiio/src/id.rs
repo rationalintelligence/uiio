@@ -1,0 +1,24 @@
+use serde::{Deserialize, Serialize};
+use std::sync::atomic::{AtomicU32, Ordering};
+
+pub const GENERATOR: Generator = Generator::new();
+
+pub struct Generator {
+    last_id: AtomicU32,
+}
+
+impl Generator {
+    pub const fn new() -> Self {
+        Self {
+            last_id: AtomicU32::new(0),
+        }
+    }
+
+    pub fn next(&self) -> FlowId {
+        let id = self.last_id.fetch_add(1, Ordering::Relaxed);
+        FlowId(id)
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize)]
+pub struct FlowId(u32);

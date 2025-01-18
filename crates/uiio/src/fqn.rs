@@ -6,8 +6,8 @@ use nom::{
 };
 use std::fmt;
 use std::str::FromStr;
-use std::sync::Arc;
 use thiserror::Error;
+use serde::{Serialize, Deserialize};
 
 /// Helper function to parse a valid identifier component
 fn identifier(input: &str) -> IResult<&str, &str> {
@@ -27,10 +27,10 @@ pub enum Error {
     Remaining(String),
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Deserialize, Serialize)]
 pub struct Fqn {
-    components: Vec<Arc<String>>,
-    rendered: Arc<String>,
+    components: Vec<String>,
+    rendered: String,
 }
 
 impl Fqn {
@@ -44,12 +44,12 @@ impl Fqn {
                     rendered.push('.');
                 }
                 rendered.push_str(item);
-                Arc::new(String::from(item))
+                String::from(item)
             })
             .collect();
         Fqn {
             components,
-            rendered: Arc::new(rendered),
+            rendered,
         }
     }
 }
