@@ -18,4 +18,4 @@ anyhow = "1.0.95"
 serde = { version = "1.0.217", features = ["derive"] }
 serde_json = "1.0.134"
 thiserror = "2.0.9"
-uiio.path = "crates/uiio"
+uiio = { version = "0.0.3", path = "crates/uiio" }
