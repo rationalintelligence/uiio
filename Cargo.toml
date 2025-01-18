@@ -3,6 +3,9 @@ resolver = "2"
 members = [
     "crates/*",
 ]
+exclude = [
+    "examples",
+]
 
 [workspace.package]
 repository = "https://github.com/rationalintelligence/uiio"

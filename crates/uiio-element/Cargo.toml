@@ -1,5 +1,5 @@
 [package]
-name = "uiio-elements"
+name = "uiio-element"
 repository.workspace = true
 version.workspace = true
 license.workspace = true

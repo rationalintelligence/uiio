@@ -1,0 +1,10 @@
+[package]
+name = "demo"
+version = "0.0.1"
+license = "MIT"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.95"
+uiio.path = "../../crates/uiio"
+uiio-element.path = "../../crates/uiio-element"

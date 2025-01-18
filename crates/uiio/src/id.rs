@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::sync::atomic::{AtomicU32, Ordering};
 
-pub const GENERATOR: Generator = Generator::new();
+pub static GENERATOR: Generator = Generator::new();
 
 pub struct Generator {
     last_id: AtomicU32,
@@ -10,7 +10,7 @@ pub struct Generator {
 impl Generator {
     pub const fn new() -> Self {
         Self {
-            last_id: AtomicU32::new(0),
+            last_id: AtomicU32::new(1),
         }
     }
 
