@@ -1,5 +1,6 @@
 [package]
 name = "uiio-element"
+description = "UI IO essential elements"
 repository.workspace = true
 version.workspace = true
 license.workspace = true
@@ -7,4 +8,4 @@ edition.workspace = true
 
 [dependencies]
 serde.workspace = true
-uiio.path = "../uiio"
+uiio.workspace = true

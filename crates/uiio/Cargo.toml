@@ -1,6 +1,6 @@
 [package]
 name = "uiio"
-description = "UI IO for the HUG tool"
+description = "UI IO protocol"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
