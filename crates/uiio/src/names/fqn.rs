@@ -35,7 +35,7 @@ pub struct Fqn {
 }
 
 impl Fqn {
-    pub fn new<'a>(components: impl IntoIterator<Item = &'a str>) -> Self {
+    pub fn from_iter<'a>(components: impl IntoIterator<Item = &'a str>) -> Self {
         let mut rendered = String::new();
         let components: Vec<_> = components
             .into_iter()
@@ -60,7 +60,7 @@ impl Fqn {
 
     pub fn extend(&self, pqn: &Pqn) -> Self {
         let components = self.iter().chain(pqn.iter());
-        Self::new(components)
+        Self::from_iter(components)
     }
 }
 
@@ -69,7 +69,7 @@ impl FromStr for Fqn {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match fqn(s) {
-            Ok((remaining, components)) if remaining.is_empty() => Ok(Fqn::new(components)),
+            Ok((remaining, components)) if remaining.is_empty() => Ok(Fqn::from_iter(components)),
             Ok((remaining, _)) => Err(Error::Remaining(remaining.into())),
             Err(err) => Err(Error::FailedToParse(err.to_string())),
         }
@@ -95,7 +95,7 @@ mod tests {
     #[test]
     fn test_fqn_parsing() {
         let input = "app.module.scope.component";
-        let expected = Fqn::new(["app", "module", "scope", "component"]);
+        let expected = Fqn::from_iter(["app", "module", "scope", "component"]);
         let result = Fqn::from_str(input).unwrap();
         assert_eq!(result, expected);
     }
@@ -109,7 +109,7 @@ mod tests {
 
     #[test]
     fn test_fqn_display() {
-        let fqn = Fqn::new(["app", "module", "scope", "component"]);
+        let fqn = Fqn::from_iter(["app", "module", "scope", "component"]);
         assert_eq!(fqn.to_string(), "app.module.scope.component");
     }
 }
