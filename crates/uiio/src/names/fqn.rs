@@ -35,7 +35,7 @@ pub struct Fqn {
 }
 
 impl Fqn {
-    fn new<'a>(components: impl IntoIterator<Item = &'a str>) -> Self {
+    pub fn new<'a>(components: impl IntoIterator<Item = &'a str>) -> Self {
         let mut rendered = String::new();
         let components: Vec<_> = components
             .into_iter()
