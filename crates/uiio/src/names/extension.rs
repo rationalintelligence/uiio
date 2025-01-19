@@ -9,7 +9,7 @@ macro_rules! name {
 #[macro_export]
 macro_rules! partial {
     ($text:expr) => {{
-        let components = const_str::split!($text, '.');
+        let components = $crate::const_str::split!($text, '.');
         $crate::names::Pqn::from_iter(components)
     }};
 }
@@ -17,7 +17,7 @@ macro_rules! partial {
 #[macro_export]
 macro_rules! full {
     ($text:expr) => {{
-        let components = const_str::split!($text, '.');
+        let components = $crate::const_str::split!($text, '.');
         $crate::names::Fqn::from_iter(components)
     }};
 }

@@ -7,6 +7,7 @@ use nom::{
 };
 use serde::{Deserialize, Serialize};
 use std::fmt;
+use std::iter;
 use std::str::FromStr;
 use thiserror::Error;
 
@@ -35,6 +36,10 @@ pub struct Fqn {
 }
 
 impl Fqn {
+    pub fn root(name: &str) -> Self {
+        Self::from_iter(iter::once(name))
+    }
+
     pub fn from_iter<'a>(components: impl IntoIterator<Item = &'a str>) -> Self {
         let mut rendered = String::new();
         let components: Vec<_> = components
