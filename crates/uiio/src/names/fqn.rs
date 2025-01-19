@@ -4,6 +4,7 @@ use nom::{
     multi::separated_list1,
     IResult,
 };
+use crate::names::Pqn;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
@@ -51,6 +52,15 @@ impl Fqn {
             components,
             rendered,
         }
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item = &'_ str> {
+        self.components.iter().map(String::as_ref)
+    }
+
+    pub fn extend(&self, pqn: &Pqn) -> Self {
+        let components = self.iter().chain(pqn.iter());
+        Self::new(components)
     }
 }
 
