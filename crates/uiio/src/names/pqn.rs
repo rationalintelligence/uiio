@@ -1,3 +1,11 @@
+#[macro_export]
+macro_rules! name {
+    ($($item:expr),* $(,)?) => {
+        let components = vec![$($item.to_string()),*];
+        $crate::names::Pqn { components }
+    };
+}
+
 pub struct Pqn {
     components: Vec<String>,
 }

@@ -1,7 +1,7 @@
-mod id;
 mod fqn;
+mod id;
 mod pqn;
 
-pub use id::{FlowId, GENERATOR};
 pub use fqn::Fqn;
+pub use id::{FlowId, GENERATOR};
 pub use pqn::Pqn;

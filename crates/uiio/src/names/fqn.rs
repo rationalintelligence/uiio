@@ -1,10 +1,10 @@
+use crate::names::Pqn;
 use nom::{
     bytes::complete::{tag, take_while1},
     character::is_alphanumeric,
     multi::separated_list1,
     IResult,
 };
-use crate::names::Pqn;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
