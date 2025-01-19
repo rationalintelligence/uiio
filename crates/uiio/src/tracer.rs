@@ -1,6 +1,5 @@
 use crate::flow::EventFlow;
-use crate::fqn::Fqn;
-use crate::id::{FlowId, GENERATOR};
+use crate::names::{Fqn, FlowId, GENERATOR};
 use crate::protocol::{Event, Record};
 use std::marker::PhantomData;
 

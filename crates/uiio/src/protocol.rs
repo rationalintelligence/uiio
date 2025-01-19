@@ -1,6 +1,5 @@
 use crate::flow::EventFlow;
-use crate::fqn::Fqn;
-use crate::id::FlowId;
+use crate::names::{Fqn, FlowId};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 

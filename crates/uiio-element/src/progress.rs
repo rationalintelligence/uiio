@@ -1,6 +1,6 @@
 use serde::Serialize;
 use uiio::flow::EventFlow;
-use uiio::fqn::Fqn;
+use uiio::names::Fqn;
 use uiio::tracer::Tracer;
 
 #[derive(Serialize, Clone)]
