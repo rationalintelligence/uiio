@@ -1,3 +1,4 @@
+pub mod extension;
 mod fqn;
 mod id;
 mod pqn;
