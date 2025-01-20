@@ -17,16 +17,16 @@ pub enum Event<'a, T: EventFlow> {
     Destroy,
 }
 
-#[derive(Serialize)]
-pub struct RecordDe<T: EventFlow> {
+#[derive(Deserialize)]
+pub struct RecordDe {
     pub id: FlowId,
-    pub event: EventDe<T>,
+    pub event: EventDe,
 }
 
-#[derive(Serialize)]
+#[derive(Deserialize)]
 #[serde(rename_all = "snake_case")]
-pub enum EventDe<T: EventFlow> {
+pub enum EventDe {
     Create { fqn: Fqn, class: String },
-    Value(T),
+    Value(Value),
     Destroy,
 }
