@@ -1,4 +1,3 @@
-use crate::names::Pqn;
 use nom::{
     bytes::complete::{tag, take_while1},
     character::is_alphanumeric,
@@ -7,7 +6,6 @@ use nom::{
 };
 use serde::{Deserialize, Serialize};
 use std::fmt;
-use std::iter;
 use std::str::FromStr;
 use thiserror::Error;
 
@@ -36,10 +34,6 @@ pub struct Fqn {
 }
 
 impl Fqn {
-    pub fn root(name: &str) -> Self {
-        Self::from_iter(iter::once(name))
-    }
-
     pub fn from_iter<'a>(components: impl IntoIterator<Item = &'a str>) -> Self {
         let mut rendered = String::new();
         let components: Vec<_> = components
@@ -61,11 +55,6 @@ impl Fqn {
 
     pub fn iter(&self) -> impl Iterator<Item = &'_ str> {
         self.components.iter().map(String::as_ref)
-    }
-
-    pub fn extend(&self, pqn: &Pqn) -> Self {
-        let components = self.iter().chain(pqn.iter());
-        Self::from_iter(components)
     }
 }
 
