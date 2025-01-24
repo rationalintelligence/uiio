@@ -1,5 +1,6 @@
 [package]
 name = "uiio"
+description = "stdio protocol for debugging"
 repository = "https://github.com/runtime-blocks/uiio"
 version = "0.0.4"
 license = "MIT"
